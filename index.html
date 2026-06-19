@@ -293,6 +293,10 @@
       👥 Participantes: <span id="contadorParticipantes">0</span>
     </div>
 
+    <div id="bannerEncerrado" style="display:none;background:#c62828;color:#fff;text-align:center;padding:14px 16px;font-weight:700;font-size:1rem;">
+      ⛔ Apostas encerradas — prazo: 20h15 (Manaus) / 21h15 (Brasília)
+    </div>
+
     <!-- ===== Formulário ===== -->
     <form id="formBolao" autocomplete="on">
       <div class="campo">
@@ -337,7 +341,7 @@
         </div>
         <div class="checkbox-linha">
           <input type="checkbox" id="confirmaPagamento" name="confirmaPagamento" />
-          <label for="confirmaPagamento">Confirmo que já realizei o pagamento</label>
+          <label for="confirmaPagamento">Me comprometo que farei o pagamento a ou aos vencedores</label>
         </div>
       </div>
 
@@ -399,6 +403,27 @@
     let firebaseOk = false;
 
     // ===================================================================
+    // PRAZO PARA APOSTAS: 15 min antes do jogo (20h30 Manaus / 21h30 Brasília)
+    // Encerra: 20h15 Manaus = 00h15 UTC do dia 20/06/2026
+    // ===================================================================
+    const PRAZO_APOSTAS    = new Date("2026-06-20T00:15:00Z");
+    const bannerEncerrado  = document.getElementById("bannerEncerrado");
+
+    function apostasAbertas() {
+      return new Date() < PRAZO_APOSTAS;
+    }
+
+    function verificarPrazo() {
+      if (!apostasAbertas()) {
+        bannerEncerrado.style.display = "block";
+        Array.from(form.elements).forEach(el => el.disabled = true);
+        botao.style.display = "none";
+      }
+    }
+
+    verificarPrazo();
+
+    // ===================================================================
     // 2) INICIALIZA O FIREBASE (com try/catch)
     // ===================================================================
     try {
@@ -443,6 +468,11 @@
     // ===================================================================
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      if (!apostasAbertas()) {
+        mostrarMensagem("⛔ Apostas encerradas! O prazo foi às 20h15 (Manaus).", "erro");
+        return;
+      }
 
       // --- Validação ---
       const nome  = form.nome.value.trim();
