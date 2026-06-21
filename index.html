@@ -59,7 +59,7 @@
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    header .bandeiras { font-size: 2rem; letter-spacing: 8px; }
+    header .bandeiras { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:8px; }
 
     header p { margin-top: 8px; font-size: 0.95rem; opacity: 0.95; }
 
@@ -284,7 +284,11 @@
 <body>
   <div class="container">
     <header>
-      <div class="bandeiras">🇧🇷 ⚽ 🇭🇹</div>
+      <div class="bandeiras">
+        <img src="https://flagcdn.com/w80/br.png" alt="Brasil" style="height:2.4rem;border-radius:4px;">
+        <span style="font-size:2rem;">⚽</span>
+        <img src="https://flagcdn.com/w80/ht.png" alt="Haiti" style="height:2.4rem;border-radius:4px;">
+      </div>
       <h1>Bolão Brasil × Haiti</h1>
       <p>Dê seu palpite e concorra com a família!</p>
     </header>
@@ -317,13 +321,13 @@
       <label style="margin-bottom:6px;">Seu palpite *</label>
       <div class="placar">
         <div class="time">
-          <div class="nome-time">🇧🇷</div>
+          <div class="nome-time"><img src="https://flagcdn.com/w80/br.png" alt="Brasil" style="height:2rem;border-radius:3px;"></div>
           <label for="golsBrasil">Brasil</label>
           <input type="number" id="golsBrasil" name="golsBrasil" min="0" max="20" placeholder="0" required />
         </div>
         <div class="x">×</div>
         <div class="time">
-          <div class="nome-time">🇭🇹</div>
+          <div class="nome-time"><img src="https://flagcdn.com/w80/ht.png" alt="Haiti" style="height:2rem;border-radius:3px;"></div>
           <label for="golsHaiti">Haiti</label>
           <input type="number" id="golsHaiti" name="golsHaiti" min="0" max="20" placeholder="0" required />
         </div>
